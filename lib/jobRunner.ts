@@ -15,7 +15,7 @@ export function JobRunner (
 	initialJobs?: Array<JobNumbered>, 
 	modifyJobSubject?: (jobSubject: Observable<JobNumbered>) => Observable<JobNumbered>,
 	modifyRetrySubject?: (retrySubject: Observable<JobNumbered>) => Observable<JobNumbered>,
-	limitConccurency?: number,
+	limitConcurrency?: number,
 ) {
 	const jobSubject = new Subject<JobNumbered>()
 	const job$ = Observable
@@ -58,7 +58,7 @@ export function JobRunner (
 	modifiedJob$
 		.flatMap(
 			job => Observable.fromPromise(jobObserver(job)),
-			limitConccurency
+			limitConcurrency
 		)
 		.subscribe()
 	retry$.subscribe(job => addJob({...job, id: uuid.v4()}))
